@@ -8,5 +8,6 @@ description: >-
   This mod by itself will not have any effects, it is meant to be used as a dependency for other mods.
 
   This mod is meant as community project, so feel free to propose additional module ideas by opening an issue, or contribute with a pull request on GitHub.
+ksp_version_min: '1.12.3'
 supports:
   - name: BoringCrewServices
