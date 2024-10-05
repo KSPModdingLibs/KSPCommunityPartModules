@@ -3,4 +3,4 @@ Source/bin/
 Source/obj/
 Source/packages/
 Source/*.user
-Gamedata/KSPCommunityPartModules/Plugin/*.pdb
+GameData/KSPCommunityPartModules/Plugin/

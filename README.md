@@ -8,7 +8,7 @@ This mod is meant as community project, so feel free to propose additional modul
 
 ### Download and installation
 
-Compatible with **1.12.3** and up - Available on [CKAN]
+Compatible with **KSP 1.12.3** and up - Available on [CKAN]
 
 **Installation**
 - Go to the **[GitHub release page](https://github.com/KSPModdingLibs/KSPCommunityPartModules/releases)** and download the newest file named `KSPCommunityPartModules_x.x.x.zip`
