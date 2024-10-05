@@ -37,5 +37,5 @@ using System.Runtime.InteropServices;
 
 [assembly: KSPAssembly(name: "KSPCommunityPartModules"
                      , versionMajor: 0
-                     , versionMinor: 0
-                     , versionRevision: 1)]
+                     , versionMinor: 1
+                     , versionRevision: 0)]

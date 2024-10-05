@@ -19,4 +19,7 @@ Compatible with **KSP 1.12.3** and up - Available on [CKAN]
 
 ### Included part modules
 
+- **ModuleCoPFollowTransform**<br/>This module adjusts the Centre of Pressure (CoP) to follow a specified transform on the same part, improving functionality for animated drag-based systems like parachutes.
+
+
 [CKAN]: https://forum.kerbalspaceprogram.com/topic/197082-ckan-the-comprehensive-kerbal-archive-network-v1332-laplace-ksp-2-support/
