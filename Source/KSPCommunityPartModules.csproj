@@ -34,6 +34,7 @@
     <PackageReference Include="KSPBuildTools" Version="0.0.2-alpha.5" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\ModuleAutoCutDrogue.cs" />
     <Compile Include="Modules\ModuleCoPFollowTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

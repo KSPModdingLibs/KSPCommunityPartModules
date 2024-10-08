@@ -21,5 +21,7 @@ Compatible with **KSP 1.12.3** and up - Available on [CKAN]
 
 - **ModuleCoPFollowTransform**<br/>This module adjusts the Centre of Pressure (CoP) to follow a specified transform on the same part, improving functionality for animated drag-based systems like parachutes.
 
+- **ModuleAutoCutDrogue**<br/>Automatically cuts deployed drogue chutes when main parachutes deploy, allowing for more realistic landings without requiring users to set up complicated action groups. 
+
 
 [CKAN]: https://forum.kerbalspaceprogram.com/topic/197082-ckan-the-comprehensive-kerbal-archive-network-v1332-laplace-ksp-2-support/
