@@ -23,7 +23,7 @@ namespace KSPCommunityPartModules.Modules
             if (followTransform == null || followTransform.name != transformName)
             {
                 if (transformName != null) followTransform = part.FindModelTransform(transformName);
-                if (followTransform == null) Debug.LogError($"[{MODULENAME}] transformName '{transformName}' was empty or does not exist.");
+                if (followTransform == null) Debug.LogError($"[{MODULENAME}] transformName '{transformName}' was empty or does not exist on part '{part.partInfo?.name}'");
             }
 
             if (followTransform == null)
