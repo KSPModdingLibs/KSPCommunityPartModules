@@ -15,20 +15,23 @@ namespace KSPCommunityPartModules.Modules
         [KSPField]
         public string transformName;
 
+        [SerializeField]
         private Transform followTransform;
 
         public override void OnLoad(ConfigNode node)
         {
-            base.OnLoad(node);
-            if (HighLogic.LoadedScene != GameScenes.LOADING)
+            if (followTransform == null || followTransform.name != transformName)
             {
                 if (transformName != null) followTransform = part.FindModelTransform(transformName);
                 if (followTransform == null) Debug.LogError($"[{MODULENAME}] transformName was empty or does not exist.");
+                this.isEnabled = followTransform != null;
+                this.enabled = followTransform != null;
             }
         }
 
         public void FixedUpdate()
         {
+            if (!HighLogic.LoadedSceneIsFlight) return;
             if (followTransform != null) part.CoPOffset = part.transform.InverseTransformPoint(followTransform.position);
         }
     }
