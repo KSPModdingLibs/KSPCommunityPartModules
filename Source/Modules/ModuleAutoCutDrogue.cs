@@ -14,7 +14,7 @@ namespace KSPCommunityPartModules.Modules
         [KSPField]
         public bool isDrogueChute = false;
 
-        [UI_Toggle(scene = UI_Scene.All, disabledText = "No", enabledText = "Yes")]
+        [UI_Toggle(scene = UI_Scene.All, disabledText = "#autoLOC_439840", enabledText = "#autoLOC_439839")]
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "#KSPCPM_CutDrogues")]
         public bool autoCutDrogue = true;
 
