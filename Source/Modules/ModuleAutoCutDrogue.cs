@@ -26,7 +26,7 @@ namespace KSPCommunityPartModules.Modules
                                                                  || pParachute.deploymentState == ModuleParachute.deploymentStates.SEMIDEPLOYED;
         public override void OnStart(StartState state)
         {
-            chute = part.FindModulesImplementing<ModuleParachute>().FirstOrDefault();
+            chute = part.FindModuleImplementing<ModuleParachute>();
             if (chute == null)
                 Debug.LogError($"[{nameof(ModuleAutoCutDrogue)}] ModuleParachute not found on part {part.partInfo.title}");
 
