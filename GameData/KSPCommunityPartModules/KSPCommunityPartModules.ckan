@@ -11,3 +11,4 @@ description: >-
 ksp_version_min: '1.12.3'
 supports:
   - name: BoringCrewServices
+  - name: BluedogDB
