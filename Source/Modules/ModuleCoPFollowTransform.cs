@@ -30,7 +30,7 @@ namespace KSPCommunityPartModules.Modules
             {
                 // this may be important if someone is swapping out versions of this module with B9PS
                 // Note this probably isn't correct for parts that also have modules that mess with this field (e.g. ModuleProceduralFairing)
-                part.CoPOffset = part.partInfo.CoPOffset;
+                part.CoPOffset = part.partInfo.partPrefab.CoPOffset;
             }
 
             // NOTE: isEnabled will be persisted to the save file, but we want to treat it purely as runtime state
