@@ -68,7 +68,7 @@ namespace KSPCommunityPartModules.Modules
 
         private void OnParachuteRepacked(ModuleParachute pChute)
         {
-            if (pChute == chute && triggered) triggered = false;
+            if (triggered && pChute == chute) triggered = false;
         }
     }
 
