@@ -51,14 +51,17 @@ namespace KSPCommunityPartModules.Modules
 
         private void OnParachuteDeployed(ModuleParachute pChute)
         {
-            if (pChute == chute && !triggered && lastFrame != Time.frameCount)
+            if (pChute == chute && !triggered)
             {
-                var drogues = vessel.FindPartModulesImplementing<ModuleAutoCutDrogue>().Where(d => d.isDrogueChute && d.chute != null);
-                foreach (ModuleAutoCutDrogue d in drogues)
+                if (lastFrame != Time.frameCount)
                 {
-                    if (IsChuteDeployed(d.chute)) d.chute.CutParachute();
+                    var drogues = vessel.FindPartModulesImplementing<ModuleAutoCutDrogue>().Where(d => d.isDrogueChute && d.chute != null);
+                    foreach (ModuleAutoCutDrogue d in drogues)
+                    {
+                        if (IsChuteDeployed(d.chute)) d.chute.CutParachute();
+                    }
+                    lastFrame = Time.frameCount;
                 }
-                lastFrame = Time.frameCount;
                 triggered = true;
             }
         }
