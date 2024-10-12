@@ -51,7 +51,7 @@ namespace KSPCommunityPartModules.Modules
 
         private void OnParachuteDeployed(ModuleParachute pChute)
         {
-            if (pChute == chute && !triggered)
+            if (autoCutDrogue && !triggered && pChute == chute)
             {
                 if (lastFrame != Time.frameCount)
                 {
