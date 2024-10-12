@@ -13,3 +13,4 @@ jobs:
     with:
       solution-file-path: 'Source/KSPCommunityPartModules.sln'
       version-string: ${{ inputs.version-string }}
+      use-ckan: true
