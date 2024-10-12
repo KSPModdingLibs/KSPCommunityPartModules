@@ -10,6 +10,10 @@ This mod is meant as community project, so feel free to propose additional modul
 
 Compatible with **KSP 1.12.3** and up - Available on [CKAN]
 
+**Required** and **must be downloaded separately** : 
+
+- **HarmonyKSP** : **[Download](https://github.com/KSPModdingLibs/HarmonyKSP/releases)** - [Homepage](https://github.com/KSPModdingLibs/HarmonyKSP/) - Available on [CKAN]
+
 **Installation**
 - Go to the **[GitHub release page](https://github.com/KSPModdingLibs/KSPCommunityPartModules/releases)** and download the newest file named `KSPCommunityPartModules_x.x.x.zip`
 - Open the downloaded *.zip archive
