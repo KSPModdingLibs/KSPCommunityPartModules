@@ -9,6 +9,8 @@ description: >-
 
   This mod is meant as community project, so feel free to propose additional module ideas by opening an issue, or contribute with a pull request on GitHub.
 ksp_version_min: '1.12.3'
+depends:
+  - name: Harmony2
 supports:
   - name: BoringCrewServices
   - name: BluedogDB

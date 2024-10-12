@@ -4,6 +4,8 @@
     Originally By:  Jsolson
     Originally For: Bluedog Design Bureau
 */
+using HarmonyLib;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -22,6 +24,10 @@ namespace KSPCommunityPartModules.Modules
         public bool triggered = false;
 
         private ModuleParachute chute = null;
+
+        // Technically this creates an edge case where if two loaded vessels deploy a main parachute at the same time only one of the vessels will cut its drogue chutes,
+        // but I feel like its unlikely enough to not warrent the effort required to fix it.
+        private static int lastFrame;
         private bool IsChuteDeployed(ModuleParachute pParachute) => pParachute.deploymentState == ModuleParachute.deploymentStates.DEPLOYED
                                                                  || pParachute.deploymentState == ModuleParachute.deploymentStates.SEMIDEPLOYED;
         public override void OnStart(StartState state)
@@ -32,33 +38,71 @@ namespace KSPCommunityPartModules.Modules
 
             Fields[nameof(autoCutDrogue)].guiActive = !isDrogueChute;
             Fields[nameof(autoCutDrogue)].guiActiveEditor = !isDrogueChute;
+
+            if (!isDrogueChute) ModuleParachuteEvents.OnDeployed += OnParachuteDeployed; 
+            if (!isDrogueChute) ModuleParachuteEvents.OnRepacked += OnParachuteRepacked;
         }
 
-        public void FixedUpdate()
+        public void OnDestroy()
         {
-            if (isDrogueChute || chute == null)
-            {
-                this.isEnabled = false;
-                this.enabled = false;
-                return;
-            }
+            ModuleParachuteEvents.OnDeployed -= OnParachuteDeployed;
+            ModuleParachuteEvents.OnRepacked -= OnParachuteRepacked;
+        }
 
-            if (IsChuteDeployed(chute))
+        private void OnParachuteDeployed(ModuleParachute pChute)
+        {
+            if (autoCutDrogue && !triggered && pChute == chute)
             {
-                if (!triggered)
+                if (lastFrame != Time.frameCount)
                 {
                     var drogues = vessel.FindPartModulesImplementing<ModuleAutoCutDrogue>().Where(d => d.isDrogueChute && d.chute != null);
                     foreach (ModuleAutoCutDrogue d in drogues)
                     {
                         if (IsChuteDeployed(d.chute)) d.chute.CutParachute();
                     }
-                    triggered = true;
+                    lastFrame = Time.frameCount;
                 }
+                triggered = true;
             }
-            else if (chute.deploymentState == ModuleParachute.deploymentStates.STOWED)
-            {
-                triggered = false;
-            }
+        }
+
+        private void OnParachuteRepacked(ModuleParachute pChute)
+        {
+            if (triggered && pChute == chute) triggered = false;
+        }
+    }
+
+    [HarmonyPatch(typeof(ModuleParachute))]
+    internal class ModuleParachuteEvents
+    {
+        public static void ModuleManagerPostLoad()
+        {
+            Harmony harmony = new Harmony("KSPCommunityPartModules");
+            harmony.PatchAll();
+        }
+
+        public static event Action<ModuleParachute> OnDeployed;
+        public static event Action<ModuleParachute> OnRepacked;
+
+        [HarmonyPostfix]
+        [HarmonyPatch("OnParachuteSemiDeployed")]
+        static void RaiseEventOnSemiDeployed(ModuleParachute __instance)
+        {
+            OnDeployed?.Invoke(__instance);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch("OnParachuteFullyDeployed")]
+        static void RaiseEventOnFullyDeployed(ModuleParachute __instance)
+        {
+            OnDeployed?.Invoke(__instance);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch("Repack")]
+        static void RaiseEventOnRepack(ModuleParachute __instance)
+        {
+            OnRepacked?.Invoke(__instance);
         }
     }
 }
