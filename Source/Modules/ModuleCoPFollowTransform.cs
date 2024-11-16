@@ -20,6 +20,7 @@ namespace KSPCommunityPartModules.Modules
 
         public override void OnLoad(ConfigNode node)
         {
+            Debug.LogWarning($"[{MODULENAME}] This module is deprecated! please use ModuleCenterFollowTransform instead!");
             if (followTransform == null || followTransform.name != transformName)
             {
                 if (transformName != null) followTransform = part.FindModelTransform(transformName);
