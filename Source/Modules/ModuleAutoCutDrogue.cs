@@ -4,10 +4,9 @@
     Originally By:  Jsolson
     Originally For: Bluedog Design Bureau
 */
-using HarmonyLib;
-using System;
 using System.Linq;
 using UnityEngine;
+using KSPCommunityPartModules.HarmonyPatches;
 
 namespace KSPCommunityPartModules.Modules
 {
@@ -69,40 +68,6 @@ namespace KSPCommunityPartModules.Modules
         private void OnParachuteRepacked(ModuleParachute pChute)
         {
             if (triggered && pChute == chute) triggered = false;
-        }
-    }
-
-    [HarmonyPatch(typeof(ModuleParachute))]
-    internal class ModuleParachuteEvents
-    {
-        public static void ModuleManagerPostLoad()
-        {
-            Harmony harmony = new Harmony("KSPCommunityPartModules");
-            harmony.PatchAll();
-        }
-
-        public static event Action<ModuleParachute> OnDeployed;
-        public static event Action<ModuleParachute> OnRepacked;
-
-        [HarmonyPostfix]
-        [HarmonyPatch("OnParachuteSemiDeployed")]
-        static void RaiseEventOnSemiDeployed(ModuleParachute __instance)
-        {
-            OnDeployed?.Invoke(__instance);
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch("OnParachuteFullyDeployed")]
-        static void RaiseEventOnFullyDeployed(ModuleParachute __instance)
-        {
-            OnDeployed?.Invoke(__instance);
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch("Repack")]
-        static void RaiseEventOnRepack(ModuleParachute __instance)
-        {
-            OnRepacked?.Invoke(__instance);
         }
     }
 }
