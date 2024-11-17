@@ -15,12 +15,15 @@ namespace KSPCommunityPartModules.Modules
 
         [KSPField]
         public bool enableCoP = false;
+        private bool wasEnabledCoP;
 
         [KSPField]
         public bool enableCoM = false;
+        private bool wasEnabledCoM;
 
         [KSPField]
         public bool enableCoL = false;
+        private bool wasEnabledCoL;
 
         [KSPField]
         public string transformName;
@@ -28,7 +31,6 @@ namespace KSPCommunityPartModules.Modules
         [SerializeField]
         private Transform followTransform;
 
-        // TODO: Reset offset to prefab value if B9PS disables one of the fields.
         public override void OnLoad(ConfigNode node)
         {
             bool anyModeActive = enableCoP || enableCoM || enableCoL;
@@ -51,7 +53,14 @@ namespace KSPCommunityPartModules.Modules
                 if (enableCoM) part.CoMOffset = part.partInfo.partPrefab.CoMOffset;
                 if (enableCoL) part.CoLOffset = part.partInfo.partPrefab.CoLOffset;
             }
-            
+            // Set offets back to the values in the prefab if the mode is disabled after initial initialisation; e.g. B9PS
+            if (!enableCoP && wasEnabledCoP) part.CoPOffset = part.partInfo.partPrefab.CoPOffset;
+            if (!enableCoM && wasEnabledCoM) part.CoMOffset = part.partInfo.partPrefab.CoMOffset;
+            if (!enableCoL && wasEnabledCoL) part.CoLOffset = part.partInfo.partPrefab.CoLOffset;
+            wasEnabledCoP = enableCoP;
+            wasEnabledCoM = enableCoM;
+            wasEnabledCoL = enableCoL;
+
             // NOTE: isEnabled will be persisted to the save file, but we want to treat it purely as runtime state
             isEnabled = followTransform != null && anyModeActive;
             enabled = followTransform != null && anyModeActive && HighLogic.LoadedSceneIsFlight;
