@@ -23,7 +23,7 @@ Compatible with **KSP 1.12.3** and up - Available on [CKAN]
 
 ### Included part modules
 
-- **ModuleCoPFollowTransform**<br/>This module adjusts the Centre of Pressure (CoP) to follow a specified transform on the same part, improving functionality for animated drag-based systems like parachutes.
+- **ModuleCoPFollowTransform**<br/>This module allows you to make the Center of Pressure (CoP), Center of Mass (CoM) or Center of Lift (CoL) follow a specified transform on the same part.
 
 - **ModuleAutoCutDrogue**<br/>Automatically cuts deployed drogue chutes when main parachutes deploy, allowing for more realistic landings without requiring users to set up complicated action groups. 
 
