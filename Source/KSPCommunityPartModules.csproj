@@ -38,6 +38,7 @@
     <Compile Include="Modules\ModuleAutoCutDrogue.cs" />
     <Compile Include="Modules\ModuleCenterFollowTransform.cs" />
     <Compile Include="Modules\ModuleCoPFollowTransform.cs" />
+    <Compile Include="Modules\ModuleDepthMask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
