@@ -27,5 +27,7 @@ Compatible with **KSP 1.12.3** and up - Available on [CKAN]
 
 - **ModuleAutoCutDrogue**<br/>Automatically cuts deployed drogue chutes when main parachutes deploy, allowing for more realistic landings without requiring users to set up complicated action groups. 
 
+- **ModuleDepthMask**<br/>This module allows for parts to have hollow insets that dont clip into other parts, ideal for engine nozzles, landing gear, air intakes, solar panel bays, and more.
+
 
 [CKAN]: https://forum.kerbalspaceprogram.com/topic/197082-ckan-the-comprehensive-kerbal-archive-network-v1332-laplace-ksp-2-support/
