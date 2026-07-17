@@ -1,10 +1,12 @@
-﻿using kOS.Utilities;
+/*
+    Usecase:        The in-editor / in-flight IMGUI window used to edit a part's name tag.
+    Originally By:  kOS contributors (Dunbaratu et al.)
+    Originally For: kOS
+*/
 using UnityEngine;
-using kOS.Module;
-using System;
 
-namespace kOS.Screen
-{    
+namespace KSPCommunityPartModules.Modules
+{
     public class KOSNameTagWindow : MonoBehaviour
     {
         private KOSNameTag attachedModule;
@@ -15,7 +17,7 @@ namespace kOS.Screen
         private int numberOfRepaints = 0; // "explicit", not "redundant".
         private bool gameEventHooksExist = false; // "explicit", not "redundant".
         private int myWindowId; // must be unique for Unity to not mash two nametag windows togehter.
-        
+
         // ReSharper enable RedundantDefaultFieldInitializer
 
         public void Invoke(KOSNameTag module, string oldValue)
@@ -23,7 +25,7 @@ namespace kOS.Screen
             attachedModule = module;
             tagValue = oldValue;
             myWindowId = GetInstanceID(); // Use the Id of this MonoBehaviour to guarantee unique window ID.
-            
+
             Vector3 screenPos = GetViewportPosFor(attachedModule.part.transform.position);
 
             // screenPos is in coords from 0 to 1, 0 to 1, not screen pixel coords.
@@ -32,26 +34,15 @@ namespace kOS.Screen
             float yPixelPoint = (1-screenPos.y) * UnityEngine.Screen.height;
             const float WINDOW_WIDTH = 200;
 
-            // windowRect = new Rect(xPixelWindow, yPixelPoint, windowWidth, 130);
             windowRect = new Rect(xPixelPoint, yPixelPoint, WINDOW_WIDTH, 130);
-
-            // Please don't delete these.  They're not being used, but that's because we haven't
-            // finished prettying up the interface with the tag line and so the coords aren't
-            // being made use of yet.  But keep this in the code so I can remember how I did the math:
-            // --------------------------------------------------------------------------------------
-            // bool drawOnLeft = (screenPos.x > 0.5f);
-            // float xPixelWindow = (drawOnLeft ? screenPos.x - 0.3f : screenPos.x + 0.2f) * UnityEngine.Screen.width;
-            // float tagLineWidth = (drawOnLeft) ? (xPixelPoint - xPixelWindow) : (xPixelWindow - xPixelPoint - windowWidth);
-            // tagLineRect = new Rect(xPixelPoint, yPixelPoint, tagLineWidth, 3);
-            // SafeHouse.Logger.Log("tagLineRect = " + tagLineRect );
 
             SetEnabled(true);
 
             if (HighLogic.LoadedSceneIsEditor)
                 attachedModule.part.SetHighlight(false, false);
-            
+
         }
-        
+
         /// <summary>
         /// Catch the event of the part disappearing, from crashing or
         /// from unloading from distance or scene change, and ensure
@@ -63,7 +54,7 @@ namespace kOS.Screen
         {
             if (whichPartWentAway != attachedModule.part)
                 return;
-            
+
             Close();
         }
 
@@ -94,8 +85,8 @@ namespace kOS.Screen
                 if (gameEventHooksExist)
                 {
                     GameEvents.onPartDestroyed.Remove(GoAwayEventCallback);
-                    GameEvents.onPartDie.Remove(GoAwayEventCallback);                
-                    gameEventHooksExist = false;                    
+                    GameEvents.onPartDie.Remove(GoAwayEventCallback);
+                    gameEventHooksExist = false;
                 }
             }
         }
@@ -110,14 +101,22 @@ namespace kOS.Screen
         /// </summary>
         private Vector3 GetViewportPosFor( Vector3 v )
         {
-            return Utils.GetCurrentCamera().WorldToViewportPoint(v);
+            return GetCurrentCamera().WorldToViewportPoint(v);
         }
-        
+
+        private static Camera GetCurrentCamera()
+        {
+            return HighLogic.LoadedSceneIsEditor ?
+                       EditorLogic.fetch.editorCamera :
+                       (MapView.MapIsEnabled ?
+                           PlanetariumCamera.Camera : FlightCamera.fetch.mainCamera);
+        }
+
         public void OnGUI()
         {
             if (Event.current.type != EventType.Repaint)
                 ++numberOfRepaints;
-            
+
             if (! enabled)
                 return;
             if (HighLogic.LoadedSceneIsEditor)
@@ -125,7 +124,7 @@ namespace kOS.Screen
 
             GUI.skin = HighLogic.Skin;
             GUILayout.Window(myWindowId, windowRect, DrawWindow,"KOS nametag");
-            
+
             // Ensure that the first time the window is made, it gets keybaord focus,
             // but allow the focus to leave the window after that:
             // The reason for the "number of repaints" check is that OnGUI has to run
@@ -142,7 +141,7 @@ namespace kOS.Screen
         {
             if (! enabled)
                 return;
-            
+
             Event e = Event.current;
             if (e.type == EventType.KeyDown)
             {
@@ -177,18 +176,18 @@ namespace kOS.Screen
             if (e.type == EventType.MouseDown || e.type == EventType.MouseUp || e.type == EventType.MouseDrag)
                 e.Use();
         }
-        
+
         public void Close()
         {
             if (HighLogic.LoadedSceneIsEditor)
                 EditorLogic.fetch.Unlock("KOSNameTagLock");
-            
+
             SetEnabled(false);
 
             if (HighLogic.LoadedSceneIsEditor)
                 attachedModule.part.SetHighlight(false, false);
         }
-        
+
         public void OnDestroy()
         {
             SetEnabled(false);

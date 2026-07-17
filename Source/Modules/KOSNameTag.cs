@@ -1,15 +1,19 @@
-using kOS.Screen;
-using kOS.Suffixed;
-using kOS.Safe.Utilities;
+/*
+    Usecase:        A user-editable name tag on any part, readable and writable by other mods.
+    Example:        kOS's part:TAG suffix and kRPC's Part.Tag both read and write this module's value.
+    Originally By:  kOS contributors (Dunbaratu et al.)
+    Originally For: kOS
+*/
 using UnityEngine;
-using System;
 
-namespace kOS.Module
+namespace KSPCommunityPartModules.Modules
 {
     public class KOSNameTag : PartModule
     {
+        public const string MODULENAME = nameof(KOSNameTag);
+
         private const string PAWGroup = "kOS";
-		
+
         private KOSNameTagWindow typingWindow;
 
         [KSPField(isPersistant = true,
@@ -32,7 +36,7 @@ namespace kOS.Module
             if (HighLogic.LoadedSceneIsEditor)
             {
                 EditorFacility whichEditor = EditorLogic.fetch.ship.shipFacility;
-                if (!(Career.CanTagInEditor(whichEditor)))
+                if (!CanTagInEditor(whichEditor))
                 {
                     var formattedString = string.Format("The {0} requires an upgrade to assign name tags", whichEditor);
                     ScreenMessages.PostScreenMessage(formattedString, 6, ScreenMessageStyle.UPPER_CENTER);
@@ -42,13 +46,13 @@ namespace kOS.Module
             // Make a new instance of typingWindow, replacing the existing one if there was one:
             KOSNameTagWindow oldTypingWindow = gameObject.GetComponent<KOSNameTagWindow>();
             if (oldTypingWindow != null)
-            Destroy(oldTypingWindow);
+                Destroy(oldTypingWindow);
             typingWindow = gameObject.AddComponent<KOSNameTagWindow>();
             typingWindow.Invoke(this, nameTag);
         }
 
-        // For issue #2764, this enforces a rule that says regardless of what ModuleManager
-        // rules end up doing, there shall only ever be one KosNameTag per part:
+        // For kOS issue #2764, this enforces a rule that says regardless of what ModuleManager
+        // rules end up doing, there shall only ever be one name tag module per part:
         public override void OnAwake()
         {
             // If other instances of me exist in this part, remove them.  I am replacing them:
@@ -57,8 +61,9 @@ namespace kOS.Module
                 PartModule pm = part.Modules[i];
                 if (pm != this && pm is KOSNameTag)
                 {
-                    SafeHouse.Logger.Log(string.Format(
-                        "Removing duplicate KOSNameTag PartModule from {0}.  KOS cannot deal with more than one tag per part.", part.name));
+                    Debug.Log(string.Format(
+                        "[{0}] Removing duplicate name tag PartModule from {1}.  Only one tag per part is supported.",
+                        MODULENAME, part.name));
                     part.RemoveModule(pm);
                 }
             }
@@ -80,6 +85,28 @@ namespace kOS.Module
             Destroy(typingWindow);
             typingWindow = null;
         }
+
+        /// <summary>
+        /// Whether the current editor building is upgraded enough to allow assigning a name tag.
+        /// In flight there is no such restriction. Tagging unlocks at the same point the game starts
+        /// unlocking basic action groups.
+        /// </summary>
+        private static bool CanTagInEditor(EditorFacility whichEditor)
+        {
+            float buildingLevel;
+            switch (whichEditor)
+            {
+                case EditorFacility.VAB:
+                    buildingLevel = ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.VehicleAssemblyBuilding);
+                    break;
+                case EditorFacility.SPH:
+                    buildingLevel = ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.SpaceplaneHangar);
+                    break;
+                default:
+                    return false;
+            }
+            return GameVariables.Instance.UnlockedActionGroupsStock(buildingLevel, false);
+        }
     }
 
     // setting isEnabled to false prevents the nametag from showing up in the PAW...work around that.
@@ -97,7 +124,7 @@ namespace kOS.Module
             GameEvents.onPartActionUICreate.Remove(OnPartActionUICreate);
             GameEvents.onPartActionUIShown.Remove(OnPartActionUIShown);
         }
-        
+
         private void OnPartActionUICreate(Part part)
         {
             var nameTagModule = part.FindModuleImplementing<KOSNameTag>();
