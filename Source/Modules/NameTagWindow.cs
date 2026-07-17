@@ -17,6 +17,7 @@ namespace KSPCommunityPartModules.Modules
         private int numberOfRepaints = 0; // "explicit", not "redundant".
         private bool gameEventHooksExist = false; // "explicit", not "redundant".
         private int myWindowId; // must be unique for Unity to not mash two nametag windows togehter.
+        private string lockId; // per-window editor input lock, so two open windows don't unlock each other.
 
         // ReSharper enable RedundantDefaultFieldInitializer
 
@@ -25,6 +26,7 @@ namespace KSPCommunityPartModules.Modules
             attachedModule = module;
             tagValue = oldValue;
             myWindowId = GetInstanceID(); // Use the Id of this MonoBehaviour to guarantee unique window ID.
+            lockId = "NameTagLock" + myWindowId; // unique per window, so closing one doesn't unlock another.
 
             Vector3 screenPos = GetViewportPosFor(attachedModule.part.transform.position);
 
@@ -120,7 +122,11 @@ namespace KSPCommunityPartModules.Modules
             if (! enabled)
                 return;
             if (HighLogic.LoadedSceneIsEditor)
-                EditorLogic.fetch.Lock(false, false, false, "KOSNameTagLock");
+                // Lock the whole editor (including part pick/place) while the window is up. The old
+                // EditorLogic.fetch.Lock(false, false, false, ...) passed all-false flags, so it never
+                // locked pick/place and clicks on Accept/Cancel fell through and dragged the part
+                // behind the window. SetControlLock is keyed by lockId and is safe to call every frame.
+                InputLockManager.SetControlLock(ControlTypes.EDITOR_LOCK, lockId);
 
             GUI.skin = HighLogic.Skin;
             GUILayout.Window(myWindowId, windowRect, DrawWindow,"Name tag");
@@ -180,7 +186,7 @@ namespace KSPCommunityPartModules.Modules
         public void Close()
         {
             if (HighLogic.LoadedSceneIsEditor)
-                EditorLogic.fetch.Unlock("KOSNameTagLock");
+                InputLockManager.RemoveControlLock(lockId);
 
             SetEnabled(false);
 
