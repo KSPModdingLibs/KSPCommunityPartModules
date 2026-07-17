@@ -35,8 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatches\ModuleParachutePatch.cs" />
-    <Compile Include="Modules\KOSNameTag.cs" />
-    <Compile Include="Modules\KOSNameTagWindow.cs" />
+    <Compile Include="Modules\ModuleNameTag.cs" />
+    <Compile Include="Modules\NameTagWindow.cs" />
     <Compile Include="Modules\ModuleAutoCutDrogue.cs" />
     <Compile Include="Modules\ModuleCenterFollowTransform.cs" />
     <Compile Include="Modules\ModuleCoPFollowTransform.cs" />

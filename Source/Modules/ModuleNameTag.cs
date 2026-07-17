@@ -8,13 +8,13 @@ using UnityEngine;
 
 namespace KSPCommunityPartModules.Modules
 {
-    public class KOSNameTag : PartModule
+    public class ModuleNameTag : PartModule
     {
-        public const string MODULENAME = nameof(KOSNameTag);
+        public const string MODULENAME = nameof(ModuleNameTag);
 
-        private const string PAWGroup = "kOS";
+        private const string PAWGroup = "Name Tag";
 
-        private KOSNameTagWindow typingWindow;
+        private NameTagWindow typingWindow;
 
         [KSPField(isPersistant = true,
                   guiActive = true,
@@ -44,10 +44,10 @@ namespace KSPCommunityPartModules.Modules
                 }
             }
             // Make a new instance of typingWindow, replacing the existing one if there was one:
-            KOSNameTagWindow oldTypingWindow = gameObject.GetComponent<KOSNameTagWindow>();
+            NameTagWindow oldTypingWindow = gameObject.GetComponent<NameTagWindow>();
             if (oldTypingWindow != null)
                 Destroy(oldTypingWindow);
-            typingWindow = gameObject.AddComponent<KOSNameTagWindow>();
+            typingWindow = gameObject.AddComponent<NameTagWindow>();
             typingWindow.Invoke(this, nameTag);
         }
 
@@ -59,7 +59,7 @@ namespace KSPCommunityPartModules.Modules
             for (int i = part.Modules.Count - 1; i >= 0; --i)
             {
                 PartModule pm = part.Modules[i];
-                if (pm != this && pm is KOSNameTag)
+                if (pm != this && pm is ModuleNameTag)
                 {
                     Debug.Log(string.Format(
                         "[{0}] Removing duplicate name tag PartModule from {1}.  Only one tag per part is supported.",
@@ -111,7 +111,7 @@ namespace KSPCommunityPartModules.Modules
 
     // setting isEnabled to false prevents the nametag from showing up in the PAW...work around that.
     [KSPAddon(KSPAddon.Startup.FlightAndEditor, false)]
-    class KOSNameTagActivationManager : MonoBehaviour
+    class NameTagActivationManager : MonoBehaviour
     {
         void Awake()
         {
@@ -127,7 +127,7 @@ namespace KSPCommunityPartModules.Modules
 
         private void OnPartActionUICreate(Part part)
         {
-            var nameTagModule = part.FindModuleImplementing<KOSNameTag>();
+            var nameTagModule = part.FindModuleImplementing<ModuleNameTag>();
             if (nameTagModule != null)
             {
                 nameTagModule.isEnabled = true;
@@ -136,7 +136,7 @@ namespace KSPCommunityPartModules.Modules
 
         private void OnPartActionUIShown(UIPartActionWindow paw, Part part)
         {
-            var nameTagModule = part.FindModuleImplementing<KOSNameTag>();
+            var nameTagModule = part.FindModuleImplementing<ModuleNameTag>();
             if (nameTagModule != null)
             {
                 nameTagModule.isEnabled = false;

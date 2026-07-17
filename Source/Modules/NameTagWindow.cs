@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace KSPCommunityPartModules.Modules
 {
-    public class KOSNameTagWindow : MonoBehaviour
+    public class NameTagWindow : MonoBehaviour
     {
-        private KOSNameTag attachedModule;
+        private ModuleNameTag attachedModule;
         private Rect windowRect;
         private string tagValue;
         // ReSharper disable RedundantDefaultFieldInitializer
@@ -20,7 +20,7 @@ namespace KSPCommunityPartModules.Modules
 
         // ReSharper enable RedundantDefaultFieldInitializer
 
-        public void Invoke(KOSNameTag module, string oldValue)
+        public void Invoke(ModuleNameTag module, string oldValue)
         {
             attachedModule = module;
             tagValue = oldValue;
@@ -123,7 +123,7 @@ namespace KSPCommunityPartModules.Modules
                 EditorLogic.fetch.Lock(false, false, false, "KOSNameTagLock");
 
             GUI.skin = HighLogic.Skin;
-            GUILayout.Window(myWindowId, windowRect, DrawWindow,"KOS nametag");
+            GUILayout.Window(myWindowId, windowRect, DrawWindow,"Name tag");
 
             // Ensure that the first time the window is made, it gets keybaord focus,
             // but allow the focus to leave the window after that:
