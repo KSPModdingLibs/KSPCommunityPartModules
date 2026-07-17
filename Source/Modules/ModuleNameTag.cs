@@ -67,10 +67,6 @@ namespace KSPCommunityPartModules.Modules
                     part.RemoveModule(pm);
                 }
             }
-
-            // make this module cheaper in update loops
-            isEnabled = false;
-            enabled = false;
         }
 
         public void TypingDone(string newValue)
@@ -106,41 +102,6 @@ namespace KSPCommunityPartModules.Modules
                     return false;
             }
             return GameVariables.Instance.UnlockedActionGroupsStock(buildingLevel, false);
-        }
-    }
-
-    // setting isEnabled to false prevents the nametag from showing up in the PAW...work around that.
-    [KSPAddon(KSPAddon.Startup.FlightAndEditor, false)]
-    class NameTagActivationManager : MonoBehaviour
-    {
-        void Awake()
-        {
-            GameEvents.onPartActionUICreate.Add(OnPartActionUICreate);
-            GameEvents.onPartActionUIShown.Add(OnPartActionUIShown);
-        }
-
-        void OnDestroy()
-        {
-            GameEvents.onPartActionUICreate.Remove(OnPartActionUICreate);
-            GameEvents.onPartActionUIShown.Remove(OnPartActionUIShown);
-        }
-
-        private void OnPartActionUICreate(Part part)
-        {
-            var nameTagModule = part.FindModuleImplementing<ModuleNameTag>();
-            if (nameTagModule != null)
-            {
-                nameTagModule.isEnabled = true;
-            }
-        }
-
-        private void OnPartActionUIShown(UIPartActionWindow paw, Part part)
-        {
-            var nameTagModule = part.FindModuleImplementing<ModuleNameTag>();
-            if (nameTagModule != null)
-            {
-                nameTagModule.isEnabled = false;
-            }
         }
     }
 }
