@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatches\ModuleParachutePatch.cs" />
+    <Compile Include="HarmonyPatches\NameTagMigrationPatch.cs" />
     <Compile Include="Modules\ModuleNameTag.cs" />
     <Compile Include="Modules\NameTagWindow.cs" />
     <Compile Include="Modules\ModuleAutoCutDrogue.cs" />
