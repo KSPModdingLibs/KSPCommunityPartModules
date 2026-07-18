@@ -31,10 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="KSPBuildTools" Version="0.0.2-alpha.7" />
+    <PackageReference Include="KSPBuildTools" Version="0.0.4" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatches\ModuleParachutePatch.cs" />
+    <Compile Include="HarmonyPatches\NameTagMigrationPatch.cs" />
+    <Compile Include="Modules\ModuleNameTag.cs" />
+    <Compile Include="Modules\NameTagWindow.cs" />
     <Compile Include="Modules\ModuleAutoCutDrogue.cs" />
     <Compile Include="Modules\ModuleCenterFollowTransform.cs" />
     <Compile Include="Modules\ModuleCoPFollowTransform.cs" />

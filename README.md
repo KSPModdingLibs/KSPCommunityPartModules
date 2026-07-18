@@ -29,5 +29,7 @@ Compatible with **KSP 1.12.3** and up - Available on [CKAN]
 
 - **ModuleDepthMask**<br/>This module allows for parts to have hollow insets that dont clip into other parts, ideal for engine nozzles, landing gear, air intakes, solar panel bays, and more.
 
+- **ModuleNameTag**<br/>This module adds a user-editable name tag to a part, set through an in-game window. Shared by kOS (part:TAG) and kRPC (Part.Tag) so a tag assigned by one is visible to the other. Consuming mods add the module to parts with their own ModuleManager patch; legacy KOSNameTag tags from older kOS/kRPC saves are migrated automatically.
+
 
 [CKAN]: https://forum.kerbalspaceprogram.com/topic/197082-ckan-the-comprehensive-kerbal-archive-network-v1332-laplace-ksp-2-support/
