@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="KSPBuildTools" Version="0.0.2-alpha.7" />
+    <PackageReference Include="KSPBuildTools" Version="0.0.4" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatches\ModuleParachutePatch.cs" />
