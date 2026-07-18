@@ -3,6 +3,7 @@
     Example:        kOS's part:TAG suffix and kRPC's Part.Tag both read and write this module's value.
     Originally By:  kOS contributors (Dunbaratu et al.)
     Originally For: kOS
+    License:        GNU General Public License v3.0, see https://www.gnu.org/licenses/gpl-3.0.html
 */
 using UnityEngine;
 

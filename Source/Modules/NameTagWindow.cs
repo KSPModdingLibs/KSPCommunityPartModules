@@ -2,6 +2,7 @@
     Usecase:        The in-editor / in-flight IMGUI window used to edit a part's name tag.
     Originally By:  kOS contributors (Dunbaratu et al.)
     Originally For: kOS
+    License:        GNU General Public License v3.0, see https://www.gnu.org/licenses/gpl-3.0.html
 */
 using UnityEngine;
 
