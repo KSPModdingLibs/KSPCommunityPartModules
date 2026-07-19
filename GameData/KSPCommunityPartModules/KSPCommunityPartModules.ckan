@@ -1,6 +1,6 @@
 identifier: KSPCommunityPartModules
 name: KSP Community Part Modules
-license: GPLv3
+license: GPL-3.0
 abstract: A collection of part modules that are frequently used, Exists as a dependency for other mods.
 description: >-
   This mod is a collection of part modules that are frequently used by multiple mods. 
