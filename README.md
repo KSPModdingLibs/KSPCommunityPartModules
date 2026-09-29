@@ -30,6 +30,12 @@ Compatible with **KSP 1.12.3** and up - Available on [CKAN]
 - **ModuleDepthMask**<br/>This module allows for parts to have hollow insets that dont clip into other parts, ideal for engine nozzles, landing gear, air intakes, solar panel bays, and more.
 
 - **ModuleNameTag**<br/>This module adds a user-editable name tag to a part, set through an in-game window. Shared by kOS (part:TAG) and kRPC (Part.Tag) so a tag assigned by one is visible to the other. Consuming mods add the module to parts with their own ModuleManager patch; legacy KOSNameTag tags from older kOS/kRPC saves are migrated automatically.
+  
+- **ModuleAttachmentVisuals**<br/>This module adds configurable visibility for part objects similar to `ModuleJettison` but with improved configurability and the ability to support multiple instances on the same part. 
+  
+- **ModuleExclusiveResourceConverter**<br/>This module is a variant of the stock resource converter which will only allow one process to run at a time (for example cannot convert LFO and Monoprop at the same time).
+  
+- **ModuleToggleTracking**<br/>This module allows the sun-tracking behaviour of solar/radiator panels or any `ModuleDeployablePart` instance to be enabled or disabled on the fly.
 
 
 [CKAN]: https://forum.kerbalspaceprogram.com/topic/197082-ckan-the-comprehensive-kerbal-archive-network-v1332-laplace-ksp-2-support/

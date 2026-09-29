@@ -36,7 +36,10 @@
   <ItemGroup>
     <Compile Include="HarmonyPatches\ModuleParachutePatch.cs" />
     <Compile Include="HarmonyPatches\NameTagMigrationPatch.cs" />
+    <Compile Include="Modules\ModuleAttachmentVisuals.cs" />
+    <Compile Include="Modules\ModuleExclusiveResourceConverter.cs" />
     <Compile Include="Modules\ModuleNameTag.cs" />
+    <Compile Include="Modules\ModuleToggleTracking.cs" />
     <Compile Include="Modules\NameTagWindow.cs" />
     <Compile Include="Modules\ModuleAutoCutDrogue.cs" />
     <Compile Include="Modules\ModuleCenterFollowTransform.cs" />
