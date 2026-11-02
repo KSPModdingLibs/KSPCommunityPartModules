@@ -32,10 +32,16 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="KSPBuildTools" Version="0.0.4" />
+    <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatches\ModuleParachutePatch.cs" />
+    <Compile Include="HarmonyPatches\ModuleRCSPatch.cs" />
     <Compile Include="HarmonyPatches\NameTagMigrationPatch.cs" />
+    <Compile Include="Modules\AdjusterIndividualRCS.cs" />
     <Compile Include="Modules\ModuleNameTag.cs" />
     <Compile Include="Modules\NameTagWindow.cs" />
     <Compile Include="Modules\ModuleAutoCutDrogue.cs" />
@@ -53,4 +59,11 @@
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Publicize Include="Assembly-CSharp:ModuleRCS.tC" />
+    <Publicize Include="Assembly-CSharp:ModuleRCS.adjusterCache" />
+    <Publicize Include="Assembly-CSharp:ModuleRCS.inputRot" />
+    <Publicize Include="Assembly-CSharp:ModuleRCS.inputLin" />
+    <Publicize Include="Assembly-CSharp:ModuleRCS.currentThrustForce" />
+  </ItemGroup>
 </Project>
